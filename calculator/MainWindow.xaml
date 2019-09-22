@@ -6,8 +6,8 @@
         xmlns:local="clr-namespace:calculator"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-    <Grid>
-        <Grid  Width="800" ShowGridLines="False">
+    <Grid >
+        <Grid  Width="800" ShowGridLines="False" x:Name="mainGrid">
             <Grid.RowDefinitions>
                 <RowDefinition Height="1*"/>
                 <RowDefinition Height="2*"/>
@@ -25,25 +25,25 @@
                 <ColumnDefinition Width="2*"/>
                 <ColumnDefinition Width="1*"/>
             </Grid.ColumnDefinitions>
-            <Button Name="buttonReset" Content="Reset" Grid.Row="1" Grid.Column="1" Click="ButtonReset_Click"/>
-            <Button Name="buttonAC" Content="AC" Grid.Row="1" Grid.Column="2" Click="ButtonAC_Click"/>
-            <Button Name="buttonC" Content="C" Grid.Row="1" Grid.Column="3" Click="ButtonC_Click"/>
-            <Button Name="button_dev" Content="/" Grid.Row="1" Grid.Column="4" Click="Button_dev_Click"/>
-            <Button Name="button7" Content="7" Grid.Row="2" Grid.Column="1" Click="Button7_Click"/>
-            <Button Name="button8" Content="8" Grid.Row="2" Grid.Column="2" Click="Button8_Click"/>
-            <Button Name="button9" Content="9" Grid.Row="2" Grid.Column="3" Click="Button9_Click"/>
-            <Button Name="button_mal" Content="*" Grid.Row="2" Grid.Column="4" Click="Button_mal_Click"/>
-            <Button Name="button4" Content="4" Grid.Row="3" Grid.Column="1" Click="Button4_Click"/>
-            <Button Name="button5" Content="5" Grid.Row="3" Grid.Column="2" Click="Button5_Click"/>
-            <Button Name="button6" Content="6" Grid.Row="3" Grid.Column="3" Click="Button6_Click"/>
-            <Button Name="button_min" Content="-" Grid.Row="3" Grid.Column="4" Click="Button_min_Click"/>
-            <Button Name="button1" Content="1" Grid.Row="4" Grid.Column="1" Click="Button1_Click" />
-            <Button Name="button2" Content="2" Grid.Row="4" Grid.Column="2" Click="Button2_Click" />
-            <Button Name="button3" Content="3" Grid.Row="4" Grid.Column="3" Click="Button3_Click" />
-            <Button Name="button_plu" Content="+" Grid.Row="4" Grid.Column="4" Click="Button_plu_Click"/>
-            <Button Name="buttonDot" Content="." Grid.Row="5" Grid.Column="1" Click="ButtonDot_Click"/>
-            <Button Name="button0" Content="0" Grid.Row="5" Grid.Column="2" Click="Button0_Click"/>
-            <Button Name="button_equ" Content="=" Grid.Row="5" Grid.Column="3" Grid.ColumnSpan="2" Click="Button_equ_Click"/>
+            <Button Content="Reset" Grid.Row="1" Grid.Column="1"/>
+            <Button Content="AC" Grid.Row="1" Grid.Column="2" />
+            <Button Content="C" Grid.Row="1" Grid.Column="3" />
+            <Button Content="/" Grid.Row="1" Grid.Column="4" />
+            <Button Content="7" Grid.Row="2" Grid.Column="1" />
+            <Button Content="8" Grid.Row="2" Grid.Column="2" />
+            <Button Content="9" Grid.Row="2" Grid.Column="3" />
+            <Button Content="*" Grid.Row="2" Grid.Column="4" />
+            <Button Content="4" Grid.Row="3" Grid.Column="1" />
+            <Button Content="5" Grid.Row="3" Grid.Column="2" />
+            <Button Content="6" Grid.Row="3" Grid.Column="3" />
+            <Button Content="-" Grid.Row="3" Grid.Column="4" />
+            <Button Content="1" Grid.Row="4" Grid.Column="1" />
+            <Button Content="2" Grid.Row="4" Grid.Column="2" />
+            <Button Content="3" Grid.Row="4" Grid.Column="3" />
+            <Button Content="+" Grid.Row="4" Grid.Column="4" />
+            <Button Content="." Grid.Row="5" Grid.Column="1" />
+            <Button Content="0" Grid.Row="5" Grid.Column="2" />
+            <Button Content="=" Grid.Row="5" Grid.Column="3" Grid.ColumnSpan="2" />
             <TextBox TextWrapping="Wrap" Text="History" Grid.Column="0" Grid.Row="1" Grid.RowSpan="3" Name="History"/>
             <TextBox TextWrapping="Wrap" Grid.Column="0" Grid.Row="4" Grid.RowSpan="2" Name="calculateBox"/>
         </Grid>

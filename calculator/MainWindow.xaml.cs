@@ -20,124 +20,97 @@ namespace calculator
     /// </summary>
     public partial class MainWindow : Window
     {
-        public int[] input;
+        static readonly string FailedMessage = "failed";
+        static readonly int MaxFormulaLength = 16;
+
 
         public MainWindow()
         {
             InitializeComponent();
+            setEvents();
         }
 
-        private void Button0_Click(object sender, RoutedEventArgs e)
+        private void setEvents()
         {
-            calculateBox.Text += button0.Content.ToString();
-
-        }
-
-        private void Button1_Click(object sender, RoutedEventArgs e)
-        {
-            calculateBox.Text += button1.Content.ToString();
-        }
-
-        private void Button2_Click(object sender, RoutedEventArgs e)
-        {
-            calculateBox.Text += button2.Content.ToString();
-
-        }
-
-        private void Button3_Click(object sender, RoutedEventArgs e)
-        {
-            calculateBox.Text += button3.Content.ToString();
-
-        }
-
-        private void Button4_Click(object sender, RoutedEventArgs e)
-        {
-            calculateBox.Text += button4.Content.ToString();
-
-        }
-
-        private void Button5_Click(object sender, RoutedEventArgs e)
-        {
-            calculateBox.Text += button5.Content.ToString();
-
-        }
-
-        private void Button6_Click(object sender, RoutedEventArgs e)
-        {
-            calculateBox.Text += button6.Content.ToString();
-
-        }
-
-        private void Button7_Click(object sender, RoutedEventArgs e)
-        {
-            calculateBox.Text += button7.Content.ToString();
-
-        }
-
-        private void Button8_Click(object sender, RoutedEventArgs e)
-        {
-            calculateBox.Text += button8.Content.ToString();
-
-        }
-
-        private void Button9_Click(object sender, RoutedEventArgs e)
-        {
-            calculateBox.Text += button9.Content.ToString();
-
-        }
-
-        private void ButtonDot_Click(object sender, RoutedEventArgs e)
-        {
-            calculateBox.Text += buttonDot.Content.ToString();
-
-        }
-
-        private void Button_equ_Click(object sender, RoutedEventArgs e)
-        {
-            calculateBox.Text += button_equ.Content.ToString();
-
-        }
-
-        private void Button_plu_Click(object sender, RoutedEventArgs e)
-        {
-            calculateBox.Text += button_plu.Content.ToString();
-
-        }
-
-        private void Button_min_Click(object sender, RoutedEventArgs e)
-        {
-            calculateBox.Text += button_min.Content.ToString();
-
-        }
-
-        private void Button_mal_Click(object sender, RoutedEventArgs e)
-        {
-            calculateBox.Text += button_mal.Content.ToString();
-
-        }
-
-        private void Button_dev_Click(object sender, RoutedEventArgs e)
-        {
-            calculateBox.Text += button_dev.Content.ToString();
-
-        }
-
-        private void ButtonC_Click(object sender, RoutedEventArgs e)
-        {
-            calculateBox.Text += buttonC.Content.ToString();
-
-        }
-
-        private void ButtonAC_Click(object sender, RoutedEventArgs e)
-        {
-            calculateBox.Text += buttonAC.Content.ToString();
-
-        }
-
-        private void ButtonReset_Click(object sender, RoutedEventArgs e)
-        {
-            calculateBox.Text += buttonReset.Content.ToString();
-
+            // Grid配下からボタンコントロールを探す
+            foreach (var ctrl in LogicalTreeHelper.GetChildren(mainGrid))
+            {
+                if (!(ctrl is Button))
+                {
+                    continue;
+                }
+                // ctrlオブジェクトをButtonにアップキャストして，クリック処理を追加
+                (ctrl as Button).Click += (sender, e) =>
+                {
+                    string input = (sender as Button).Content.ToString();
+                    switch (input)
+                    {
+                        case "AC":
+                            // all clear
+                            History.Text = null;
+                            calculateBox.Text = null;
+                            break;
+                        case "C":
+                            // clear only calculationBox
+                            calculateBox.Text = null;
+                            break;
+                        case "=":
+                            if (calculateBox.Text == FailedMessage)
+                            {
+                                calculateBox.Text = "0";
+                            }
+                            else
+                            {
+                                calculateBox.Text = Calculate.calculation(calculateBox.Text);
+                            }
+                            break;
+                        default:
+                            if (MaxFormulaLength <= calculateBox.Text.Length)
+                            {
+                                break;
+                            }
+                            else if (calculateBox.Text == "0")
+                            {
+                                foreach (var letter in Calculate.operatorStr)
+                                {
+                                    if (letter == input)
+                                        calculateBox.Text += input;
+                                }
+                                // 0が入力されているのに数字が入力されたら，数字を上書きする
+                                calculateBox.Text = input;
+                            }
+                            else if (calculateBox.Text == FailedMessage)
+                            {
+                                // failedMessageでも数字を上書き
+                                calculateBox.Text = input;
+                            }
+                            else if (input == ".")
+                            {
+                                // 二回以上'.'を入力しないようにする
+                                foreach (var letter in calculateBox.Text)
+                                {
+                                    if (letter == '.')
+                                    {
+                                        MessageBox.Show("Can't input 'Dot' twice");
+                                        break;
+                                    }
+                                }
+                                calculateBox.Text += input;
+                            }
+                            else if (Calculate.operatorStr.Contains(input) && calculateBox.Text.EndsWith(input))
+                            {
+                                // calculateBoxの末尾がオペレータなら入力値に入れ替え
+                                calculateBox.Text.Remove(calculateBox.Text.Length - 1);
+                                calculateBox.Text += input;
+                            }
+                            else
+                            {
+                                calculateBox.Text += input;
+                            }
+                            break;
+                    }
+                };
+            }
         }
 
     }
