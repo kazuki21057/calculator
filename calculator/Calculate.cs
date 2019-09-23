@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Management.Automation;
+using System.Management.Automation.Runspaces;
 
 namespace calculator
 {
@@ -18,7 +20,23 @@ namespace calculator
 
         static public string calculation (string formula)
         {
-            showMessage(formula);
+            // powershellに計算を投げる
+            using (var rs = RunspaceFactory.CreateRunspace())
+            {
+                rs.Open();
+                using (var ps = PowerShell.Create())
+                {
+                    ps.Runspace = rs;
+                    //ps.AddCommand("echo \"" + formula + "\"");
+                    //ps.AddCommand("5+5");
+                    ps.AddScript(formula);
+                    foreach (var result in ps.Invoke())
+                    {
+                        return result.ToString();
+                        //showMessage(result.ToString());
+                    }
+                }
+            }
             return null;
         }
     }

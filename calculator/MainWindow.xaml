@@ -44,8 +44,8 @@
             <Button Content="." Grid.Row="5" Grid.Column="1" />
             <Button Content="0" Grid.Row="5" Grid.Column="2" />
             <Button Content="=" Grid.Row="5" Grid.Column="3" Grid.ColumnSpan="2" />
-            <TextBox TextWrapping="Wrap" Text="History" Grid.Column="0" Grid.Row="1" Grid.RowSpan="3" Name="History"/>
-            <TextBox TextWrapping="Wrap" Grid.Column="0" Grid.Row="4" Grid.RowSpan="2" Name="calculateBox"/>
+            <TextBox TextWrapping="Wrap" Grid.Column="0" Grid.Row="1" Grid.RowSpan="3" Name="History" FontSize="20"/>
+            <TextBox TextWrapping="Wrap" Grid.Column="0" Grid.Row="4" Grid.RowSpan="2" Name="calculateBox" FontSize="20"/>
         </Grid>
 
     </Grid>
