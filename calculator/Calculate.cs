@@ -11,7 +11,7 @@ namespace calculator
 {
     class Calculate
     {
-        static public List<string> operatorStr = new List<string>() { "+", "-", "*", "/" };
+        static public List<string> operatorStr = new List<string>() { "+", "-", "*", "/", "%"};
 
         static public void showMessage(string message)
         {
@@ -30,10 +30,17 @@ namespace calculator
                     //ps.AddCommand("echo \"" + formula + "\"");
                     //ps.AddCommand("5+5");
                     ps.AddScript(formula);
-                    foreach (var result in ps.Invoke())
+                    try
                     {
-                        return result.ToString();
-                        //showMessage(result.ToString());
+                        foreach (var result in ps.Invoke())
+                        {
+                            return result.ToString();
+                            //showMessage(result.ToString());
+                        }
+                    }
+                    catch(Exception e)
+                    {
+                        return null;
                     }
                 }
             }

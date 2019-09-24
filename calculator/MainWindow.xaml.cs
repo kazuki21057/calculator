@@ -54,6 +54,10 @@ namespace calculator
                             // clear only calculationBox
                             calculateBox.Text = null;
                             break;
+                        case "Delete":
+                            // delete a last letter
+                            calculateBox.Text = calculateBox.Text.Remove(calculateBox.Text.Length - 1);
+                            break;
                         case "=":
                             if (calculateBox.Text == FailedMessage)
                             {
@@ -62,6 +66,8 @@ namespace calculator
                             else
                             {
                                 calculateBox.Text = Calculate.calculation(calculateBox.Text);
+                                if (calculateBox.Text == "")
+                                    calculateBox.Text = FailedMessage;
                             }
                             break;
                         default:
@@ -97,11 +103,20 @@ namespace calculator
                                 }
                                 calculateBox.Text += input;
                             }
-                            else if (Calculate.operatorStr.Contains(input) && calculateBox.Text.EndsWith(input))
+                            else if (Calculate.operatorStr.Contains(input))
                             {
-                                // calculateBoxの末尾がオペレータなら入力値に入れ替え
-                                calculateBox.Text.Remove(calculateBox.Text.Length - 1);
-                                calculateBox.Text += input;
+                                bool flag_endOperator = false;
+                                foreach (var letter in Calculate.operatorStr)
+                                {
+                                    if (calculateBox.Text.EndsWith(letter))
+                                    {// calculateBoxの末尾がオペレータなら入力値に入れ替え
+                                        calculateBox.Text = calculateBox.Text.Remove(calculateBox.Text.Length - 1);
+                                        calculateBox.Text += input;
+                                        flag_endOperator = true;
+                                    }
+                                }
+                                if (!flag_endOperator)
+                                    calculateBox.Text += input;
                             }
                             else
                             {
@@ -112,6 +127,5 @@ namespace calculator
                 };
             }
         }
-
     }
 }
